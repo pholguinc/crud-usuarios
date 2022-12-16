@@ -6,11 +6,25 @@
           <h5 class="text-center card-title fw-bold">
             <i class="ml-3 fas fa-circle-dollar-to-slot"></i> Listado de Monedas
           </h5>
+          <div class="dropdown ms-auto">
+            <a
+              class="dropdown-toggle dropdown-toggle-nocaret"
+              href="#"
+              data-bs-toggle="dropdown"
+              ><i class="bx bx-dots-horizontal-rounded font-22 text-option"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <Link :href="route('admin.users.create')" class="dropdown-item">
+                  <i class="fas fa-sack-dollar text-danger"></i>
+                  <span id="action">Nueva Moneda</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
         <hr />
-        <div class="row">
-          <div class="col-sm-7">
-            <div class="mb-3 search-bar">
+        <div class="mb-3 search-bar">
               <div class="position-relative">
                 <input
                   type="text"
@@ -23,28 +37,6 @@
                 ></span>
               </div>
             </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="mt-2" id="buttons-duple">
-              <Link
-                data-bs-toggle="modal"
-                data-bs-target="#CoinOpen"
-                class="px-5 btn btn-primary btn-sm radius-30"
-              >
-                <i class="bx bxs-plus-square"></i>
-                Nueva Moneda
-              </Link>
-              <Link
-                :href="route('admin.maintenance')"
-                class="px-5 btn btn-primary btn-sm radius-30"
-                style="margin-left: 8px"
-              >
-                <i class="bx bx-arrow-back"></i>
-                Regresar
-              </Link>
-            </div>
-          </div>
-        </div>
         <div class="table-responsive" id="table-data">
           <table
             class="table mt-2 mb-0 table-bordered table-striped table-hover"
@@ -59,25 +51,25 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr v-for="coin in coins.data" :key="coin.id">
                 <td class="text-center">
                   <div class="justify-center">
                     <div class="mt-1 ms-2">
-                      <h6 class="mb-0 text-center font-14">#OS-000354</h6>
+                      <h6 class="mb-0 text-center font-14">{{  coin.name  }}</h6>
                     </div>
                   </div>
                 </td>
                 <td class="text-center">
                   <div class="justify-center">
                     <div class="mt-1 ms-2">
-                      <h6 class="mb-0 text-center font-14">#OS-000354</h6>
+                      <h6 class="mb-0 text-center font-14">{{  coin.prefix  }}</h6>
                     </div>
                   </div>
                 </td>
                 <td class="text-center">
                   <div class="justify-center">
                     <div class="mt-1 ms-2">
-                      <h6 class="mb-0 text-center font-14">June 10, 2020</h6>
+                        {{ moment(coin.created_at).format("DD-MM-YYYY") }}
                     </div>
                   </div>
                 </td>
@@ -104,6 +96,21 @@
               </tr>
             </tbody>
           </table>
+          <div class="mt-3">
+                <div class="m-2 float-start">
+                  <Link
+                    :href="route('admin.maintenance')"
+                    class="px-5 m-1 btn btn-primary btn-sm radius-30"
+                  >
+                    <i class="bx bx-arrow-back"></i>
+                    Regresar
+                  </Link>
+                </div>
+
+            <div class="mt-2 float-end">
+                <Pagination :pagination="coins"></Pagination>
+            </div>
+            </div>
         </div>
       </div>
     </div>
@@ -116,11 +123,25 @@
 import { Link } from "@inertiajs/inertia-vue3";
 import AdminLayout from "../../../Layouts/AdminLayout.vue";
 import ModalCreate from "../Coin/Create.vue";
+import Pagination from "../../../Components/theme/Pagination.vue";
+import moment from "moment";
 export default {
   components: {
     AdminLayout,
     Link,
-    ModalCreate
+    ModalCreate,
+    Pagination
+  },
+  props: {
+    coins: {
+      type: Object,
+    },
+  },
+  data() {
+    return {
+      term: "",
+      moment: moment,
+    };
   },
 };
 </script>

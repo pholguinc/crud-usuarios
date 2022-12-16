@@ -17,7 +17,15 @@ export default defineConfig({
                     base: null,
                     includeAbsolute: false,
                 },
+                compilerOptions: {
+                    isCustomElement: (tag) => {
+                      return tag.startsWith('ion-') // (return true)
+                    }
+                  }
             },
         }),
     ],
+    build: {
+        chunkSizeWarningLimit: 1600,
+      },
 });

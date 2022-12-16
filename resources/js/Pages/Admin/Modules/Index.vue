@@ -25,32 +25,32 @@
             </Link>
         </div>
         <div class="col">
-            <div class="card card-module radius-10">
+            <Link :href="route('admin.document.index')" class="card card-module radius-10">
                 <div class="card-body">
                     <div class="text-center">
                         <div class="mx-auto text-primary">
                             <i class="bx bx-id-card" style="font-size:80px"></i>
                         </div>
-                        <p class="mb-0">
+                        <p class="mb-0 text-dark">
                             <strong>Tipo de Documento</strong>
                         </p>
                     </div>
                 </div>
-            </div>
+            </Link>
         </div>
         <div class="col">
-            <div class="card card-module radius-10">
+            <Link :href="route('admin.company.index')"  class="card card-module radius-10">
                 <div class="card-body">
                     <div class="text-center">
                         <div class="mx-auto text-primary">
                             <i class="bx bx-dialpad" style="font-size:80px"></i>
                         </div>
-                        <p class="mb-0">
+                        <p class="mb-0 text-dark">
                             <strong>Empresa</strong>
                         </p>
                     </div>
                 </div>
-            </div>
+            </Link>
         </div>
         <div class="col">
             <div class="card card-module radius-10">

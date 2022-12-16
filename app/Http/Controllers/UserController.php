@@ -5,22 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $users = User::where('status', ['Activo'])
-        ->when($request->term, function($query, $term){
-            $query->where('name', 'LIKE', '%'. $term. '%')
-                  ->orWhere('lastname', 'LIKE', '%'. $term. '%');
-        })->paginate(8);
-        /*return $users;*/
+            ->when($request->term, function ($query, $term) {
+                $query->where('name', 'LIKE', '%' . $term . '%')
+                    ->orWhere('lastname', 'LIKE', '%' . $term . '%');
+            })->paginate(8);
+        //return $users;
         return Inertia::render('Admin/Users/Index', compact('users'));
     }
 
@@ -42,7 +37,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'lastname' => 'required',
+            'email' => 'required',
+            'dni' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'password' => 'required',
+            'status' => 'required'
+        ]);
+
+        $response = User::create($data);
+        //return Inertia::render('Admin/Users/Create')->with('status', true);
+        return redirect()->route('admin.users.index', $response)->with('message', 'El usuario se registró correctamente');
     }
 
     /**
@@ -56,57 +64,47 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return Inertia::render('Admin/Users/Edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $data = $request->only('name', 'lastname', 'email',
+                                'dni', 'phone', 'address', 'status');
+
+        if(trim($request->password) == ''){
+            $data = $request->except('password');
+        }else{
+            $data = $request->all();
+            $data['password']= $request->password;
+        }
+
+        $user->update($data);
+        return redirect()->route('admin.users.index')->with('message', 'El usuarió se actualizó correctamente');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('admin.users.index')->with('message', 'El usuarió se eliminó correctamente');
     }
 
 
-    public function inactive(Request $request){
-        /*$users = User::
-        when($request->term, function($query, $term){
-            $query->where('name', 'LIKE', '%'. $term. '%')
-                  ->orWhere('lastname', 'LIKE', '%'. $term. '%');
-        })->paginate(8);*/
-        $users = User::where('status', ['Inactivo'])
-        ->when($request->term, function($query, $term){
-            $query->where('name', 'LIKE', '%'. $term. '%')
-                  ->orWhere('lastname', 'LIKE', '%'. $term. '%');
-        })->paginate(8);
+    public function inactive(Request $request)
+    {
 
+        $users = User::where('status', ['Inactivo'])
+            ->when($request->term, function ($query, $term) {
+                $query->where('name', 'LIKE', '%' . $term . '%')
+                    ->orWhere('lastname', 'LIKE', '%' . $term . '%');
+            })->paginate(8);
 
         return Inertia::render('Admin/Users/InactiveUsers', compact('users'));
-
-
     }
 
 }

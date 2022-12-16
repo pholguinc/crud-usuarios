@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
         <!-- Scripts -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         @routes
             @vite(['resources/js/app.js','resources/js/main.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
@@ -24,6 +25,7 @@
 	</div>
 	<!--end wrapper-->
     <!--plugins-->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 

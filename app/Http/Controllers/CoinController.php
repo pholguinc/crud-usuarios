@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coin;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,7 +15,8 @@ class CoinController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Coin/Index');
+        $coins = Coin::paginate(8);
+        return Inertia::render('Admin/Coin/Index', compact('coins'));
     }
 
     /**

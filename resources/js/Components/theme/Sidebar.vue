@@ -41,16 +41,16 @@
         </Link>
       </li>
       <li>
-        <a href="javascript:;">
+        <Link :href="route('admin.clients.index')">
           <div class="parent-icon"><i class="bx bx-user"></i></div>
           <div class="menu-title">Clientes</div>
-        </a>
+        </Link>
       </li>
       <li>
-        <a href="javascript:;">
+        <Link :href="route('admin.providers.index')">
           <div class="parent-icon"><i class="bx bx-cart"></i></div>
           <div class="menu-title">Proveedores</div>
-        </a>
+        </Link>
       </li>
       <li>
         <a href="javascript:;">

@@ -21,7 +21,9 @@ class UserSeeder extends Seeder
             'phone' => '903023713',
             'email' => 'holguinpedro90@gmail.com',
             'dni' => '73317273',
-            'password' => bcrypt('12345')
+            'password' => bcrypt('12345'),
+            'status' => 'Activo',
+            'address' => 'Lima'
             ]);
 
         User::factory(99)->create();

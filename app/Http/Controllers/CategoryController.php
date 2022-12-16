@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Categories/Index');
+        $categories = Category::paginate(8);
+        return Inertia::render('Admin/Categories/Index', compact('categories'));
     }
 
     /**
