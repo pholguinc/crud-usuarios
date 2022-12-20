@@ -63,4 +63,11 @@ class User extends Authenticatable
     /*public function setPasswordAttribute($value){
         $this->attributes['password'] = Hash::make($value);
     }*/
+
+
+     //Relación uno a muchos inversa
+
+     public function sale(){
+        return $this->hasMany(Sale::class);
+    }
 }
